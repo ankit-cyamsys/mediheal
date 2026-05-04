@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Digital Zen UI Kit Showcase</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-variant": "#e1e3df",
+                    "surface-container": "#edeeea",
+                    "outline-variant": "#c1c8c4",
+                    "surface-container-low": "#f2f4f0",
+                    "on-primary-container": "#87aa9d",
+                    "surface-container-highest": "#e1e3df",
+                    "primary": "#052920",
+                    "on-error-container": "#93000a",
+                    "error": "#ba1a1a",
+                    "surface": "#f8faf5",
+                    "error-container": "#ffdad6",
+                    "secondary-container": "#ffafd4",
+                    "on-tertiary-container": "#a4a39c",
+                    "on-surface-variant": "#414845",
+                    "on-secondary-fixed": "#390525",
+                    "secondary-fixed-dim": "#ffafd4",
+                    "on-secondary-container": "#7c3e5e",
+                    "on-secondary": "#ffffff",
+                    "surface-dim": "#d9dbd6",
+                    "on-tertiary-fixed-variant": "#474742",
+                    "on-primary": "#ffffff",
+                    "on-surface": "#191c1a",
+                    "surface-tint": "#44655a",
+                    "primary-container": "#1e3f35",
+                    "on-primary-fixed": "#002018",
+                    "tertiary": "#242420",
+                    "surface-container-high": "#e7e9e4",
+                    "on-error": "#ffffff",
+                    "secondary": "#8a496a",
+                    "primary-fixed": "#c6ebdc",
+                    "inverse-on-surface": "#f0f1ed",
+                    "on-background": "#191c1a",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-fixed": "#e5e2db",
+                    "tertiary-fixed-dim": "#c9c6c0",
+                    "inverse-primary": "#aacec0",
+                    "outline": "#717975",
+                    "secondary-fixed": "#ffd8e8",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-fixed-variant": "#6e3252",
+                    "on-primary-fixed-variant": "#2c4d42",
+                    "background": "#f8faf5",
+                    "surface-bright": "#f8faf5",
+                    "inverse-surface": "#2e312e",
+                    "on-tertiary-fixed": "#1c1c18",
+                    "primary-fixed-dim": "#aacec0",
+                    "tertiary-container": "#3a3935"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "16px",
+                    "unit": "8px",
+                    "margin-desktop": "40px",
+                    "container-max": "1200px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "body-md": ["Manrope"],
+                    "headline-md": ["Manrope"],
+                    "headline-lg": ["Manrope"],
+                    "body-lg": ["Manrope"],
+                    "label-md": ["Manrope"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Manrope', sans-serif; }
+    </style>
+<style>
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen">
+<!-- TopAppBar Shell -->
+<header class="sticky top-0 z-50 bg-stone-50/80 backdrop-blur-md border-b border-stone-200 flex justify-between items-center w-full px-6 py-3 font-manrope antialiased tracking-tight shadow-sm shadow-emerald-900/5">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-emerald-900" data-icon="language">language</span>
+<span class="text-xl font-bold text-emerald-900">Serenity</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="text-label-md font-label-md text-emerald-900">EN / HI</span>
+<div class="w-10 h-10 rounded-full bg-primary overflow-hidden border-2 border-primary-fixed">
+<img alt="User profile photo" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6yMYA-XyJSoQ4uYMS68rmzrmFmpwvA7RIFFHlCUvObjhjPBICoB0zTigdMcMxrQ56Y7mbVHBRxGrzIquvnXLpGQOIwit3dt61Vf6Bqljl6pLfrCLpT2qpToa48iR4Tl6qwlKXmFALhvS3T0qgZaism1HDDnwYZ891PXzJxcFgRjhtmL_8uGDC9NbpPbMBsLf2QEdnxya_YVN8eIx-22K8GWPiy2b8IfJTXPFjV-EybK-Wnx6IWlRD-Kbe3i5qvEozctnwut68Vlg"/>
+</div>
+</div>
+</header>
+<main class="max-w-[1200px] mx-auto px-6 py-12 pb-32">
+<div class="mb-16 text-center">
+<h1 class="font-headline-lg text-headline-lg text-primary mb-2">Design System Showcase</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">A comprehensive look at the visual tokens and components that define the Digital Zen sanctuary.</p>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+<!-- Section: Brand Identity & Detailed Colors -->
+<section class="md:col-span-8 bg-surface-container-lowest p-8 rounded-xl shadow-sm border border-outline-variant/30">
+<div class="flex justify-between items-end mb-8">
+<div>
+<span class="text-secondary font-label-md tracking-widest uppercase">01</span>
+<h2 class="font-headline-md text-headline-md text-primary">Color Palette</h2>
+</div>
+</div>
+<div class="space-y-10">
+<!-- Primary Colors -->
+<div>
+<p class="text-on-surface font-label-md mb-4 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary"></span> Primary: Forest Green (#1E3F35)
+                        </p>
+<div class="grid grid-cols-5 gap-2">
+<div class="flex flex-col gap-2">
+<div class="h-16 w-full rounded-lg bg-[#002018]"></div>
+<span class="text-[10px] text-on-surface-variant text-center">Darkest</span>
+</div>
+<div class="flex flex-col gap-2">
+<div class="h-16 w-full rounded-lg bg-[#052920]"></div>
+<span class="text-[10px] text-on-surface-variant text-center">Dark</span>
+</div>
+<div class="flex flex-col gap-2">
+<div class="h-16 w-full rounded-lg bg-[#1E3F35]"></div>
+<span class="text-[10px] text-on-surface-variant text-center font-bold">Main</span>
+</div>
+<div class="flex flex-col gap-2">
+<div class="h-16 w-full rounded-lg bg-[#aacec0]"></div>
+<span class="text-[10px] text-on-surface-variant text-center">Light</span>
+</div>
+<div class="flex flex-col gap-2">
+<div class="h-16 w-full rounded-lg bg-[#c6ebdc]"></div>
+<span class="text-[10px] text-on-surface-variant text-center">Lightest</span>
+</div>
+</div>
+</div>
+<!-- Secondary Colors -->
+<div>
+<p class="text-on-surface font-label-md mb-4 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary"></span> Secondary: Pinkish Purple (#9B6B9E)
+                        </p>
+<div class="grid grid-cols-5 gap-2">
+<div class="flex flex-col gap-2">
+<div class="h-16 w-full rounded-lg bg-[#390525]"></div>
+<span class="text-[10px] text-on-surface-variant text-center">Darkest</span>
+</div>
+<div class="flex flex-col gap-2">
+<div class="h-16 w-full rounded-lg bg-[#6e3252]"></div>
+<span class="text-[10px] text-on-surface-variant text-center">Dark</span>
+</div>
+<div class="flex flex-col gap-2">
+<div class="h-16 w-full rounded-lg bg-[#8a496a]"></div>
+<span class="text-[10px] text-on-surface-variant text-center font-bold">Main</span>
+</div>
+<div class="flex flex-col gap-2">
+<div class="h-16 w-full rounded-lg bg-[#ffafd4]"></div>
+<span class="text-[10px] text-on-surface-variant text-center">Light</span>
+</div>
+<div class="flex flex-col gap-2">
+<div class="h-16 w-full rounded-lg bg-[#ffd8e8]"></div>
+<span class="text-[10px] text-on-surface-variant text-center">Lightest</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section: Interactive & Status -->
+<section class="md:col-span-4 space-y-8">
+<div class="bg-surface-container-high p-6 rounded-xl border border-outline-variant/30">
+<h3 class="font-headline-md text-primary mb-6">Mental Progress</h3>
+<div class="relative flex items-center justify-center">
+<svg class="w-40 h-40 transform -rotate-90">
+<circle class="text-surface-variant" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-width="12"></circle>
+<circle class="text-primary" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-dasharray="440" stroke-dashoffset="110" stroke-linecap="round" stroke-width="12"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-headline-lg font-headline-lg text-primary">75%</span>
+<span class="text-label-md font-label-md text-on-surface-variant">Focus</span>
+</div>
+</div>
+</div>
+<div class="bg-primary-container p-6 rounded-xl text-white shadow-lg shadow-primary-container/20">
+<h3 class="font-headline-md mb-6 text-surface-container-lowest">Emotional Stability</h3>
+<div class="space-y-4">
+<input class="w-full h-2 bg-primary-fixed/30 rounded-lg appearance-none cursor-pointer accent-primary-fixed" max="10" min="1" type="range" value="7"/>
+<div class="flex justify-between text-label-md text-primary-fixed/80">
+<span>1 - Low</span>
+<span class="font-bold text-white text-lg">7</span>
+<span>10 - Peak</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Section: Typography Details (Full Width) -->
+<section class="md:col-span-12 bg-surface-container-lowest p-8 rounded-xl shadow-sm border border-outline-variant/30">
+<div class="mb-8">
+<span class="text-secondary font-label-md tracking-widest uppercase">02</span>
+<h2 class="font-headline-md text-headline-md text-primary">Typography System</h2>
+<p class="font-body-md text-on-surface-variant mt-1">Font Family: <span class="font-bold text-primary">Manrope</span></p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+<!-- Headline Scale -->
+<div class="space-y-6">
+<h3 class="text-label-md uppercase tracking-wider text-secondary border-b border-outline-variant/30 pb-2">Headlines</h3>
+<div class="space-y-4">
+<div>
+<p class="text-[11px] font-bold text-outline uppercase mb-1">Headline LG • 32px / Bold (700) / 40px LH</p>
+<h1 class="font-headline-lg text-headline-lg text-primary">Serene Mindset</h1>
+</div>
+<div>
+<p class="text-[11px] font-bold text-outline uppercase mb-1">Headline MD • 24px / SemiBold (600) / 32px LH</p>
+<h2 class="font-headline-md text-headline-md text-primary">Daily Meditation Guide</h2>
+</div>
+<div>
+<p class="text-[11px] font-bold text-outline uppercase mb-1">Headline SM • 20px / SemiBold (600) / 28px LH</p>
+<h3 class="text-[20px] font-semibold leading-[28px] text-primary">Digital Wellness Tools</h3>
+</div>
+</div>
+</div>
+<!-- Body & Label Scale -->
+<div class="space-y-10">
+<div class="space-y-6">
+<h3 class="text-label-md uppercase tracking-wider text-secondary border-b border-outline-variant/30 pb-2">Body &amp; Labels</h3>
+<div class="space-y-4">
+<div>
+<p class="text-[11px] font-bold text-outline uppercase mb-1">Body LG • 18px / Regular (400) / 28px LH</p>
+<p class="font-body-lg text-body-lg text-on-surface">Experience deep focus through guided breathing.</p>
+</div>
+<div>
+<p class="text-[11px] font-bold text-outline uppercase mb-1">Body MD • 16px / Regular (400) / 24px LH</p>
+<p class="font-body-md text-body-md text-on-surface">Standard text for paragraphs and descriptive content.</p>
+</div>
+<div>
+<p class="text-[11px] font-bold text-outline uppercase mb-1">Label LG • 14px / SemiBold (600) / 20px LH</p>
+<span class="font-label-md text-label-md text-secondary">ACTIVE SESSION</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section: Components (Full Width Grid) -->
+<div class="md:col-span-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Buttons & Actions -->
+<section class="bg-surface-container-lowest p-8 rounded-xl shadow-sm border border-outline-variant/30 flex flex-col">
+<h3 class="font-headline-md text-primary mb-8">Actions</h3>
+<div class="space-y-4">
+<button class="w-full py-4 px-6 bg-primary text-on-primary rounded-xl font-headline-md hover:opacity-90 transition-opacity">
+                            Primary Button
+                        </button>
+<button class="w-full py-4 px-6 border-2 border-secondary text-secondary rounded-xl font-headline-md hover:bg-secondary/5 transition-colors">
+                            Secondary Outlined
+                        </button>
+<div class="pt-4 space-y-3">
+<button class="w-full py-3 px-6 bg-white border border-outline-variant rounded-xl flex items-center justify-center gap-3 font-label-md hover:bg-stone-50 transition-colors">
+<img alt="Google Logo" class="w-5 h-5" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBE4vnegN_Ioy0ZYHsG_N83vDAN28T4AsBtokgHyj8BhHhXrTv_OZhFt6N3_17lYPa5dvrZ77ZYGlu9lUNfDAHoi1DX25psL1qQGTrlRw8ReKtV2GDQ_lRThQLqmwbCCMzUhw5A10XTPoBg3V2nrnKzNxjXi0hKpVLOhRmeycTcIAOeuDLkG2Utx3mcJOWLs9gUB0owwd3WQN0qHZ5ZhOWi18YAj0yz04m0zb6QelmOxaBGKAQv4x-3qn5FcijWIAuDRWcK2Vk2NFo"/>
+                                Sign in with Google
+                            </button>
+<button class="w-full py-3 px-6 bg-black text-white rounded-xl flex items-center justify-center gap-3 font-label-md hover:bg-stone-900 transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="apple">ios</span>
+                                Sign in with Apple
+                            </button>
+</div>
+</div>
+</section>
+<!-- Forms & Inputs -->
+<section class="bg-surface-container-lowest p-8 rounded-xl shadow-sm border border-outline-variant/30">
+<h3 class="font-headline-md text-primary mb-8">Input Fields</h3>
+<form class="space-y-6" onsubmit="return false">
+<div class="space-y-2">
+<label class="font-label-md text-on-surface-variant block">Full Name</label>
+<input class="w-full p-4 rounded-xl border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-body-md bg-surface" placeholder="Sarah Mitchell" type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-2">
+<label class="font-label-md text-on-surface-variant block">Age</label>
+<input class="w-full p-4 rounded-xl border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-body-md bg-surface" placeholder="28" type="number"/>
+</div>
+<div class="space-y-2">
+<label class="font-label-md text-on-surface-variant block">Gender</label>
+<select class="w-full p-4 rounded-xl border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-body-md bg-surface">
+<option>Select</option>
+<option>Female</option>
+<option>Male</option>
+<option>Non-binary</option>
+</select>
+</div>
+</div>
+<div class="flex items-center gap-3 p-4 bg-primary-fixed/20 rounded-xl">
+<span class="material-symbols-outlined text-primary" data-icon="info">info</span>
+<p class="text-[12px] text-on-primary-fixed-variant leading-tight">Your data is encrypted and used only to personalize your wellness journey.</p>
+</div>
+</form>
+</section>
+<!-- Content Cards -->
+<section class="space-y-6">
+<!-- Mentor Card -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm border border-outline-variant/30 flex items-center gap-4 hover:shadow-md transition-shadow">
+<div class="w-16 h-16 rounded-full overflow-hidden shrink-0">
+<img alt="Sarah - Mentor" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcDfg-ZO4kgJkUL-RS7-_1Fg_t5C_UrBfvqiUTQUXLkvTXZYhonRgcHQBncYl1MeagQ9jTMjbMsgbnitODXlPUcWKtpq1EhsaTZzldb5Ce3485xb5IseLluFoBzTHPmOiNafU9DAlBaQam-75mxkZuuRHQM3UT8ULCsvI7lr41jH9bAg5_QqNssNRxmv0RBh7_L6RsMFcV9BMzF-DUV4n-47AVvyhfN4Vi9mzwCMhgviyyVxVY4CG8qavhUWmgJyRkgIdQB3-hH2I"/>
+</div>
+<div class="flex-1">
+<h4 class="font-headline-md text-primary leading-tight text-[18px]">Sarah Mitchell</h4>
+<p class="text-label-md text-on-surface-variant">Cognitive Specialist</p>
+<div class="flex items-center gap-1 mt-1 text-secondary font-label-md">
+<span class="material-symbols-outlined text-[16px]" data-icon="star" data-weight="fill">star</span>
+                                4.9 (120 reviews)
+                            </div>
+</div>
+<button class="p-2 text-primary hover:bg-primary-fixed rounded-lg transition-colors">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+</button>
+</div>
+<!-- Session Card -->
+<div class="group relative bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-outline-variant/30">
+<div class="h-32 w-full overflow-hidden relative">
+<img alt="Morning Meditation" class="w-full h-full object-cover transition-transform group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBG7OLI0Cs7hmthhQqfSAdL8X0CKFwoeJxVZwDN4ppam6hGMk6NGoiknw6Nf_-QrOfgItcvEcSOhr-acyE6Ic9xBXybgo1IEuvBaG0AcnvHpi7kpoZr8d0YCnUzb_goI667GWp0v7jUgNe9UPIDv08va2WXFbfuijyHMFjNSOs7txaXGjTuSUrSu0bWIwRaR0DdpELthzMtT4DT1wSRQkxL6eHgmo_9pr4XCR3ychBoU6n_27rbbHaBOes0vMLYXZki8HLEb-gpAzQ"/>
+<div class="absolute top-3 left-3 bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">
+                                Recommended
+                            </div>
+</div>
+<div class="p-4">
+<h4 class="font-headline-md text-primary text-[18px]">Mindful Dawn Session</h4>
+<div class="flex items-center justify-between mt-3 text-on-surface-variant">
+<div class="flex items-center gap-1 text-label-md">
+<span class="material-symbols-outlined text-[18px]" data-icon="schedule">schedule</span>
+                                    15 min
+                                </div>
+<div class="flex items-center gap-1 text-label-md">
+<span class="material-symbols-outlined text-[18px]" data-icon="visibility">visibility</span>
+                                    12.4k views
+                                </div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+<!-- BottomNavBar Shell -->
+<nav class="fixed bottom-0 left-0 w-full z-50 bg-white border-t border-stone-100 shadow-[0_-4px_20px_rgba(30,63,53,0.05)] rounded-t-2xl flex justify-around items-center px-4 pt-3 pb-6 font-manrope font-medium">
+<div class="flex flex-col items-center justify-center text-stone-400 hover:text-emerald-800 hover:scale-105 transition-all">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="text-[11px]">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center text-stone-400 hover:text-emerald-800 hover:scale-105 transition-all">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+<span class="text-[11px]">Explore</span>
+</div>
+<div class="flex flex-col items-center justify-center text-emerald-900 bg-emerald-50 rounded-xl px-3 py-1.5 transition-all scale-105">
+<span class="material-symbols-outlined" data-icon="trending_up" data-weight="fill">trending_up</span>
+<span class="text-[11px]">Progress</span>
+</div>
+<div class="flex flex-col items-center justify-center text-stone-400 hover:text-emerald-800 hover:scale-105 transition-all">
+<span class="material-symbols-outlined" data-icon="subscriptions">subscriptions</span>
+<span class="text-[11px]">Library</span>
+</div>
+<div class="flex flex-col items-center justify-center text-stone-400 hover:text-emerald-800 hover:scale-105 transition-all">
+<span class="material-symbols-outlined" data-icon="volunteer_activism">volunteer_activism</span>
+<span class="text-[11px]">Donate</span>
+</div>
+</nav>
+</body></html>
