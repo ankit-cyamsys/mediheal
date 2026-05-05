@@ -1,0 +1,39 @@
+{
+  "common": {
+    "appName": "MediHeal",
+    "welcome": "Welcome to MediHeal",
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "retry": "Retry",
+    "cancel": "Cancel",
+    "save": "Save",
+    "done": "Done",
+    "next": "Next",
+    "back": "Back",
+    "signIn": "Sign In",
+    "signOut": "Sign Out",
+    "signInWithGoogle": "Sign in with Google",
+    "signInWithApple": "Sign in with Apple"
+  },
+  "tabs": {
+    "home": "Home",
+    "explore": "Explore",
+    "progress": "Progress",
+    "library": "Library",
+    "profile": "Profile"
+  },
+  "home": {
+    "greeting": "Hello, {{name}}",
+    "recommendedSessions": "Recommended Sessions",
+    "viewAll": "View All"
+  },
+  "session": {
+    "duration": "{{minutes}} min",
+    "views": "{{count}} views"
+  },
+  "settings": {
+    "language": "Language",
+    "english": "English",
+    "hindi": "हिन्दी"
+  }
+}
