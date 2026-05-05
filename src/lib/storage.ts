@@ -1,4 +1,5 @@
 import { Platform } from 'react-native';
+import { MMKV_ID } from '@/lib/constants';
 
 function createStorage() {
   if (Platform.OS === 'web') {
@@ -10,7 +11,7 @@ function createStorage() {
   }
 
   const { MMKV } = require('react-native-mmkv');
-  const instance = new MMKV({ id: 'mediheal-storage' });
+  const instance = new MMKV({ id: MMKV_ID });
   return {
     getItem: (key: string) => instance.getString(key) ?? null,
     setItem: (key: string, value: string) => instance.set(key, value),

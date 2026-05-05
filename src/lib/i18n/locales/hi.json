@@ -1,0 +1,39 @@
+{
+  "common": {
+    "appName": "MediHeal",
+    "welcome": "MediHeal में आपका स्वागत है",
+    "loading": "लोड हो रहा है...",
+    "error": "कुछ गलत हो गया",
+    "retry": "पुनः प्रयास करें",
+    "cancel": "रद्द करें",
+    "save": "सहेजें",
+    "done": "हो गया",
+    "next": "अगला",
+    "back": "पीछे",
+    "signIn": "साइन इन करें",
+    "signOut": "साइन आउट करें",
+    "signInWithGoogle": "Google से साइन इन करें",
+    "signInWithApple": "Apple से साइन इन करें"
+  },
+  "tabs": {
+    "home": "होम",
+    "explore": "खोजें",
+    "progress": "प्रगति",
+    "library": "लाइब्रेरी",
+    "profile": "प्रोफ़ाइल"
+  },
+  "home": {
+    "greeting": "नमस्ते, {{name}}",
+    "recommendedSessions": "अनुशंसित सत्र",
+    "viewAll": "सभी देखें"
+  },
+  "session": {
+    "duration": "{{minutes}} मिनट",
+    "views": "{{count}} बार देखा गया"
+  },
+  "settings": {
+    "language": "भाषा",
+    "english": "English",
+    "hindi": "हिन्दी"
+  }
+}

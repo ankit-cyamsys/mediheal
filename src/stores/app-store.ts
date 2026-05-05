@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { mmkvStorage } from '@/lib/storage';
+import { STORAGE_KEYS } from '@/lib/constants';
 
 interface AppState {
   onboarded: boolean;
@@ -14,7 +15,7 @@ export const useAppStore = create<AppState>()(
       setOnboarded: (value) => set({ onboarded: value }),
     }),
     {
-      name: 'app-store',
+      name: STORAGE_KEYS.APP_STORE,
       storage: createJSONStorage(() => mmkvStorage),
     },
   ),

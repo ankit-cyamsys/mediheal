@@ -1,12 +1,17 @@
 import { Platform } from 'react-native';
+import {
+  SENTRY_DSN,
+  SENTRY_TRACES_SAMPLE_RATE_DEV,
+  SENTRY_TRACES_SAMPLE_RATE_PROD,
+} from '@/lib/constants';
 
 export function initSentry() {
   if (Platform.OS === 'web') return;
 
   const Sentry = require('@sentry/react-native');
   Sentry.init({
-    dsn: process.env.EXPO_PUBLIC_SENTRY_DSN ?? '',
-    tracesSampleRate: __DEV__ ? 1.0 : 0.2,
+    dsn: SENTRY_DSN,
+    tracesSampleRate: __DEV__ ? SENTRY_TRACES_SAMPLE_RATE_DEV : SENTRY_TRACES_SAMPLE_RATE_PROD,
     enabled: !__DEV__,
   });
 }
