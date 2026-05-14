@@ -113,3 +113,61 @@ export const radii = {
 
 export type ColorToken = keyof typeof colors;
 export type TypographyToken = keyof typeof typography;
+
+export const darkColors = {
+  primary: '#AACEC0',
+  'primary-container': '#1E3F35',
+  'primary-fixed': '#C6EBDC',
+  'primary-fixed-dim': '#AACEC0',
+  'on-primary': '#15362C',
+  'on-primary-container': '#87AA9D',
+  'on-primary-fixed': '#002018',
+  'on-primary-fixed-variant': '#2C4D42',
+
+  secondary: '#EBB5ED',
+  'secondary-container': '#643968',
+  'secondary-fixed': '#FFD6FE',
+  'secondary-fixed-dim': '#EBB5ED',
+  'on-secondary': '#49204E',
+  'on-secondary-container': '#DCA7DE',
+  'on-secondary-fixed': '#310937',
+  'on-secondary-fixed-variant': '#613766',
+
+  tertiary: '#B8CAC9',
+  'tertiary-container': '#2C3C3C',
+  'tertiary-fixed': '#D4E6E5',
+  'tertiary-fixed-dim': '#B8CAC9',
+  'on-tertiary': '#233333',
+  'on-tertiary-container': '#95A6A5',
+  'on-tertiary-fixed': '#0E1E1E',
+  'on-tertiary-fixed-variant': '#3A4A49',
+
+  error: '#FFB4AB',
+  'error-container': '#93000A',
+  'on-error': '#690005',
+  'on-error-container': '#FFDAD6',
+
+  surface: '#121413',
+  'surface-dim': '#121413',
+  'surface-bright': '#383A38',
+  'surface-variant': '#333534',
+  'surface-tint': '#AACEC0',
+  'surface-container': '#1E201F',
+  'surface-container-low': '#1A1C1B',
+  'surface-container-high': '#282A29',
+  'surface-container-highest': '#333534',
+  'surface-container-lowest': '#0D0F0E',
+  'on-surface': '#E2E3E0',
+  'on-surface-variant': '#C1C8C4',
+
+  outline: '#8B928E',
+  'outline-variant': '#414845',
+
+  background: '#121413',
+  'on-background': '#E2E3E0',
+  'inverse-surface': '#E2E3E0',
+  'inverse-on-surface': '#2F312F',
+  'inverse-primary': '#44655A',
+} as const;
+
+export type DarkColorToken = keyof typeof darkColors;

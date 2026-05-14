@@ -8,11 +8,13 @@ export function Input({ label, error, className = '', ...props }: InputProps) {
     <View className="gap-2">
       {label && <LabelMd>{label}</LabelMd>}
       <TextInput
-        className={`w-full rounded-xl border bg-surface p-4 text-body-md text-on-surface ${error ? 'border-error' : 'border-outline-variant'} ${className}`}
+        className={`w-full rounded-xl border bg-surface p-4 text-body-md text-on-surface dark:bg-d-surface dark:text-d-on-surface ${error ? 'border-error dark:border-d-error' : 'border-outline-variant dark:border-d-outline-variant'} ${className}`}
         placeholderTextColor={styles.placeholderColor}
         {...props}
       />
-      {error && <Text className="text-label-md font-semibold text-error">{error}</Text>}
+      {error && (
+        <Text className="text-label-md font-semibold text-error dark:text-d-error">{error}</Text>
+      )}
     </View>
   );
 }

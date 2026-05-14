@@ -12,8 +12,22 @@
     "back": "पीछे",
     "signIn": "साइन इन करें",
     "signOut": "साइन आउट करें",
-    "signInWithGoogle": "Google से साइन इन करें",
-    "signInWithApple": "Apple से साइन इन करें"
+    "signInWithGoogle": "Google",
+    "signInWithApple": "Apple",
+    "orContinueWith": "या इसके साथ जारी रखें",
+    "continueAsGuest": "अतिथि के रूप में जारी रखें"
+  },
+  "auth": {
+    "loginTitle": "लॉगिन",
+    "loginSubtitle": "आज अपनी आंतरिक शांति खोजें।",
+    "email": "ईमेल पता",
+    "emailPlaceholder": "name@example.com",
+    "password": "पासवर्ड",
+    "passwordPlaceholder": "••••••••",
+    "forgotPassword": "भूल गए?",
+    "noAccount": "MediHeal में नए हैं?",
+    "createAccount": "खाता बनाएं",
+    "accessibilityNote": "सभी के लिए डिज़ाइन किया गया। समायोज्य टेक्स्ट आकार और उच्च कंट्रास्ट मोड उपलब्ध हैं।"
   },
   "tabs": {
     "home": "होम",

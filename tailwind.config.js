@@ -5,6 +5,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        // Light theme (default)
         primary: '#052920',
         'primary-container': '#1E3F35',
         'primary-fixed': '#C6EBDC',
@@ -52,6 +53,40 @@ module.exports = {
         'inverse-surface': '#2E312E',
         'inverse-on-surface': '#F0F1ED',
         'inverse-primary': '#AACEC0',
+        // Dark theme tokens (used with dark: prefix)
+        'd-primary': '#AACEC0',
+        'd-primary-container': '#1E3F35',
+        'd-on-primary': '#15362C',
+        'd-on-primary-container': '#87AA9D',
+        'd-secondary': '#EBB5ED',
+        'd-secondary-container': '#643968',
+        'd-on-secondary': '#49204E',
+        'd-on-secondary-container': '#DCA7DE',
+        'd-tertiary': '#B8CAC9',
+        'd-tertiary-container': '#2C3C3C',
+        'd-error': '#FFB4AB',
+        'd-error-container': '#93000A',
+        'd-on-error': '#690005',
+        'd-on-error-container': '#FFDAD6',
+        'd-surface': '#121413',
+        'd-surface-dim': '#121413',
+        'd-surface-bright': '#383A38',
+        'd-surface-variant': '#333534',
+        'd-surface-tint': '#AACEC0',
+        'd-surface-container': '#1E201F',
+        'd-surface-container-low': '#1A1C1B',
+        'd-surface-container-high': '#282A29',
+        'd-surface-container-highest': '#333534',
+        'd-surface-container-lowest': '#0D0F0E',
+        'd-on-surface': '#E2E3E0',
+        'd-on-surface-variant': '#C1C8C4',
+        'd-outline': '#8B928E',
+        'd-outline-variant': '#414845',
+        'd-background': '#121413',
+        'd-on-background': '#E2E3E0',
+        'd-inverse-surface': '#E2E3E0',
+        'd-inverse-on-surface': '#2F312F',
+        'd-inverse-primary': '#44655A',
       },
       fontSize: {
         'headline-lg': [

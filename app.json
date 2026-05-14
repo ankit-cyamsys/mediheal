@@ -36,7 +36,10 @@
           "organization": "your-org",
           "project": "mediheal"
         }
-      ]
+      ],
+      "@sentry/react-native",
+      "expo-localization",
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true

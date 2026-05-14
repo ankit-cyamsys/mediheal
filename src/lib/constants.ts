@@ -10,7 +10,13 @@ export const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL ?? 'https://api.exam
 export const STORAGE_KEYS = {
   APP_STORE: 'app-store',
   LANGUAGE: 'app-language',
+  THEME: 'app-theme',
 } as const;
+
+// Theme
+export const THEME_OPTIONS = ['light', 'dark', 'system'] as const;
+export type ThemeOption = (typeof THEME_OPTIONS)[number];
+export const DEFAULT_THEME: ThemeOption = 'system';
 
 // Storage
 export const MMKV_ID = 'mediheal-storage';

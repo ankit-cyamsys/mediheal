@@ -12,8 +12,22 @@
     "back": "Back",
     "signIn": "Sign In",
     "signOut": "Sign Out",
-    "signInWithGoogle": "Sign in with Google",
-    "signInWithApple": "Sign in with Apple"
+    "signInWithGoogle": "Google",
+    "signInWithApple": "Apple",
+    "orContinueWith": "Or continue with",
+    "continueAsGuest": "Continue as Guest"
+  },
+  "auth": {
+    "loginTitle": "LogIn",
+    "loginSubtitle": "Find your inner peace today.",
+    "email": "Email Address",
+    "emailPlaceholder": "name@example.com",
+    "password": "Password",
+    "passwordPlaceholder": "••••••••",
+    "forgotPassword": "Forgot?",
+    "noAccount": "New to MediHeal?",
+    "createAccount": "Create an account",
+    "accessibilityNote": "Designed for everyone. Adjustable text sizes and high contrast modes available."
   },
   "tabs": {
     "home": "Home",

@@ -1,4 +1,5 @@
 import '../../global.css';
+import { View } from 'react-native';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { Providers } from '@/components/providers';
@@ -8,9 +9,15 @@ initSentry();
 
 export default function RootLayout() {
   return (
-    <Providers>
-      <StatusBar style="auto" />
-      <Stack screenOptions={{ headerShown: false }} />
-    </Providers>
+    <View className="flex-1">
+      <Providers>
+        <StatusBar style="auto" />
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="(tabs)" />
+          <Stack.Screen name="auth" />
+          <Stack.Screen name="dev" />
+        </Stack>
+      </Providers>
+    </View>
   );
 }
