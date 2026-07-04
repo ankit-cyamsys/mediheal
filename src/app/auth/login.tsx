@@ -129,11 +129,13 @@ export default function LoginScreen() {
           <View className="mt-10 items-center gap-4">
             <BodyMd className="text-on-surface-variant dark:text-d-on-surface-variant">
               {t('auth.noAccount')}{' '}
-              <Text className="font-semibold text-secondary dark:text-d-secondary">
-                {t('auth.createAccount')}
-              </Text>
+              <Link href="/auth/signup">
+                <Text className="font-semibold text-secondary dark:text-d-secondary">
+                  {t('auth.createAccount')}
+                </Text>
+              </Link>
             </BodyMd>
-            <Link href="/(tabs)">
+            <Link href="/auth/guest">
               <Text className="text-label-md font-semibold text-outline dark:text-d-outline">
                 {t('common.continueAsGuest')}
               </Text>

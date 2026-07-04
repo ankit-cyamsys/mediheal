@@ -11,14 +11,14 @@ export function PrimaryButton({
 }: ButtonProps) {
   return (
     <Pressable
-      className={`w-full items-center justify-center rounded-xl bg-primary-container px-6 py-4 opacity-100 active:opacity-90 dark:bg-d-primary-container ${disabled ? 'opacity-50' : ''} ${className}`}
+      className={`w-full items-center justify-center rounded-xl bg-primary-container px-6 py-4 opacity-100 active:opacity-90 dark:bg-primary-fixed-dim ${disabled ? 'opacity-50' : ''} ${className}`}
       disabled={disabled || loading}
       {...props}
     >
       {loading ? (
         <ActivityIndicator color={styles.primaryLoaderColor} />
       ) : (
-        <Text className="text-body-md font-semibold text-white dark:text-d-on-primary-container">
+        <Text className="text-body-md font-semibold text-white dark:text-primary-container">
           {children}
         </Text>
       )}

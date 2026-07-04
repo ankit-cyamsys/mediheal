@@ -1,6 +1,6 @@
 import { type ImageSourcePropType } from 'react-native';
 
-export type AvatarSize = 'sm' | 'md' | 'lg';
+export type AvatarSize = 'sm' | 'md' | 'lg' | 'xl';
 
 export type AvatarProps = {
   source: ImageSourcePropType;

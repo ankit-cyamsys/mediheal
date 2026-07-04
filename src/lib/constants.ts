@@ -9,6 +9,7 @@ export const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL ?? 'https://api.exam
 // Storage Keys
 export const STORAGE_KEYS = {
   APP_STORE: 'app-store',
+  AUTH_STORE: 'auth-store',
   LANGUAGE: 'app-language',
   THEME: 'app-theme',
 } as const;

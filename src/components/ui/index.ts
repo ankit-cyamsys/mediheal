@@ -9,6 +9,9 @@ export { Badge } from './badge';
 export { InfoBanner } from './info-banner';
 export { ProgressRing } from './progress-ring';
 export { ThemeToggle } from './theme-toggle';
+export { LanguageSwitcher } from './language-switcher';
+export { Select } from './select';
+export { DrawerMenu } from './drawer-menu';
 
 export type { TypographyProps } from './text';
 export type { ButtonProps, SocialButtonProps } from './button';
@@ -20,3 +23,4 @@ export type { AvatarProps, AvatarSize } from './avatar';
 export type { BadgeProps, BadgeVariant } from './badge';
 export type { InfoBannerProps } from './info-banner';
 export type { ProgressRingProps } from './progress-ring';
+export type { SelectProps, SelectOption } from './select';
