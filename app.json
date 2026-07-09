@@ -36,7 +36,8 @@
           "organization": "your-org",
           "project": "mediheal"
         }
-      ]
+      ],
+      "expo-audio"
     ],
     "experiments": {
       "typedRoutes": true
