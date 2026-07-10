@@ -4,12 +4,14 @@ export const APP_SCHEME = 'mediheal';
 export const APP_VERSION = '1.0.0';
 
 // API
-export const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL ?? 'https://api.example.com';
+export const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL ?? 'http://localhost:8000';
 
 // Storage Keys
 export const STORAGE_KEYS = {
   APP_STORE: 'app-store',
+  AUTH_STORE: 'auth-store',
   LANGUAGE: 'app-language',
+  DEVICE_ID: 'device-id',
 } as const;
 
 // Storage
