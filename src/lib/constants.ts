@@ -4,7 +4,7 @@ export const APP_SCHEME = 'mediheal';
 export const APP_VERSION = '1.0.0';
 
 // API
-export const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL ?? 'http://localhost:8000';
+export const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL ?? 'https://mediheal.onrender.com';
 
 // Storage Keys
 export const STORAGE_KEYS = {

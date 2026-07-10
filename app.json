@@ -37,7 +37,10 @@
           "project": "mediheal"
         }
       ],
-      "expo-audio"
+      "expo-audio",
+      "@sentry/react-native",
+      "expo-localization",
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true
