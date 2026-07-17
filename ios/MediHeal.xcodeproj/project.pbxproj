@@ -274,7 +274,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.mediheal.app";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.amct.mediheal";
 				PRODUCT_NAME = "MediHeal";
 				SWIFT_OBJC_BRIDGING_HEADER = "MediHeal/MediHeal-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -303,7 +303,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.mediheal.app";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.amct.mediheal";
 				PRODUCT_NAME = "MediHeal";
 				SWIFT_OBJC_BRIDGING_HEADER = "MediHeal/MediHeal-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;

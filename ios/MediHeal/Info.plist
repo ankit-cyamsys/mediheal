@@ -28,7 +28,7 @@
         <key>CFBundleURLSchemes</key>
         <array>
           <string>mediheal</string>
-          <string>com.mediheal.app</string>
+          <string>com.amct.mediheal</string>
         </array>
       </dict>
     </array>

@@ -89,9 +89,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'com.mediheal.app'
+    namespace 'com.amct.mediheal'
     defaultConfig {
-        applicationId 'com.mediheal.app'
+        applicationId 'com.amct.mediheal'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

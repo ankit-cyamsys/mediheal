@@ -15,14 +15,14 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.mediheal.app"
+      "bundleIdentifier": "com.amct.mediheal"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.mediheal.app"
+      "package": "com.amct.mediheal"
     },
     "web": {
       "bundler": "metro",

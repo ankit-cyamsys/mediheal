@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
-import { View, Pressable, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useRouter } from 'expo-router';
 import { WebView } from 'react-native-webview';
 import { HeadlineSm } from '@/components/ui';
 import { Icon } from '@/components/icon';
@@ -13,7 +12,6 @@ import { useAuthStore } from '@/stores/auth-store';
 const FALLBACK_URL = 'https://pages.razorpay.com/pl_RZNuhmig9UnpPx/view';
 
 export default function DonateScreen() {
-  const router = useRouter();
   const token = useAuthStore((s) => s.token);
   const [url, setUrl] = useState<string | null>(null);
   const [loaded, setLoaded] = useState(false);
@@ -30,18 +28,9 @@ export default function DonateScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-surface" edges={['top']}>
-      <View className="flex-row items-center justify-between border-b border-outline-variant px-5 py-4">
-        <Pressable
-          onPress={() => router.back()}
-          className="h-10 w-10 items-center justify-center rounded-full bg-surface-container"
-        >
-          <Icon name="back" size={20} />
-        </Pressable>
-        <View className="flex-row items-center gap-2">
-          <Icon name="heart" size={18} color={colors.primary} />
-          <HeadlineSm>Support Mediheal</HeadlineSm>
-        </View>
-        <View className="w-10" />
+      <View className="flex-row items-center justify-center gap-2 border-b border-outline-variant px-5 py-4">
+        <Icon name="heart" size={18} color={colors.primary} />
+        <HeadlineSm>Support Mediheal</HeadlineSm>
       </View>
 
       <View className="flex-1">

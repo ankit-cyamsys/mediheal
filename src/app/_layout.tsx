@@ -53,7 +53,6 @@ function RootNavigator() {
           <Stack.Screen name="programs/[id]" />
           <Stack.Screen name="play/[sessionId]" options={{ animation: 'fade' }} />
           <Stack.Screen name="complete" />
-          <Stack.Screen name="donate" options={{ presentation: 'modal' }} />
         </Stack.Protected>
       </Stack.Protected>
     </Stack>
