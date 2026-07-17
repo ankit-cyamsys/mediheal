@@ -5,7 +5,7 @@ import { Icon, type IconName } from '@/components/icon';
 const TAB_ICONS: Record<string, IconName> = {
   index: 'home',
   explore: 'compass',
-  sleep: 'moon',
+  donate: 'heart',
   progress: 'chart',
   profile: 'user',
 };
@@ -34,7 +34,7 @@ export default function TabsLayout() {
     >
       <Tabs.Screen name="index" options={{ title: 'Home' }} />
       <Tabs.Screen name="explore" options={{ title: 'Explore' }} />
-      <Tabs.Screen name="sleep" options={{ title: 'Sleep' }} />
+      <Tabs.Screen name="donate" options={{ title: 'Donate' }} />
       <Tabs.Screen name="progress" options={{ title: 'Progress' }} />
       <Tabs.Screen name="profile" options={{ title: 'Profile' }} />
     </Tabs>

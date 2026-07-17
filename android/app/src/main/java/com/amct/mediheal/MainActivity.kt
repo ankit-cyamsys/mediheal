@@ -1,4 +1,4 @@
-package com.mediheal.app
+package com.amct.mediheal
 import expo.modules.splashscreen.SplashScreenManager
 
 import android.os.Build

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import {
   View,
   Text,
+  Image,
   Pressable,
   ScrollView,
   KeyboardAvoidingView,
@@ -11,14 +12,15 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Input, PrimaryButton, SocialButton, HeadlineMd, BodyMd, LabelSm } from '@/components/ui';
 import { Icon } from '@/components/icon';
-import { Thumb } from '@/components/thumb';
-import { ON_THUMB } from '@/lib/gradients';
 import { useAuthActions } from '@/hooks/use-auth-actions';
+import { signInWithGoogle } from '@/lib/social-auth';
+
+const logo = require('../../../assets/akhand.png');
 
 type Mode = 'signin' | 'signup';
 
 export default function LoginScreen() {
-  const { signIn, signUp, continueAsGuest } = useAuthActions();
+  const { signIn, signUp, continueAsGuest, loginSocial } = useAuthActions();
   const [mode, setMode] = useState<Mode>('signin');
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState('');
@@ -47,6 +49,13 @@ export default function LoginScreen() {
     else run(() => signUp({ email, password, name: name || undefined }));
   };
 
+  const onGoogle = () =>
+    run(async () => {
+      const idToken = await signInWithGoogle();
+      if (!idToken) return; // user cancelled the account picker
+      await loginSocial(idToken);
+    });
+
   const socialSoon = (provider: string) =>
     Alert.alert('Coming soon', `${provider} sign-in will be available soon.`);
 
@@ -62,13 +71,9 @@ export default function LoginScreen() {
         >
           {/* Brand */}
           <View className="mb-8 flex-row items-center gap-4">
-            <Thumb
-              grad="g-lilac"
-              withOrbs={false}
-              className="h-16 w-16 items-center justify-center"
-            >
-              <Icon name="leaf" size={32} stroke={1.7} color={ON_THUMB} />
-            </Thumb>
+            <View className="h-16 w-16 items-center justify-center rounded-2xl border border-outline-variant bg-surface-container-lowest">
+              <Image source={logo} style={{ width: 52, height: 52 }} resizeMode="contain" />
+            </View>
             <View>
               <HeadlineMd>Mediheal</HeadlineMd>
               <BodyMd className="mt-1 text-on-surface-variant">
@@ -153,9 +158,9 @@ export default function LoginScreen() {
             <View className="h-px flex-1 bg-outline-variant" />
           </View>
 
-          {/* Social (deferred) */}
+          {/* Social */}
           <View className="gap-3">
-            <SocialButton provider="google" onPress={() => socialSoon('Google')}>
+            <SocialButton provider="google" onPress={onGoogle}>
               Continue with Google
             </SocialButton>
             <SocialButton provider="apple" onPress={() => socialSoon('Apple')}>

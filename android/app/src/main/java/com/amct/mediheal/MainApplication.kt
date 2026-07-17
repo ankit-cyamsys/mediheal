@@ -1,4 +1,4 @@
-package com.mediheal
+package com.amct.mediheal
 
 import android.app.Application
 import android.content.res.Configuration

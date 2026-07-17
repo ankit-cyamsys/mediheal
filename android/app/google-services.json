@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "150778617195",
+    "project_id": "mediheal-4504e",
+    "storage_bucket": "mediheal-4504e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:150778617195:android:58ed7638f9d3558024402e",
+        "android_client_info": {
+          "package_name": "com.amct.mediheal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "150778617195-3r3r1e4d2a2q2rmgr3q3b364cth2qm1l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbfMssccFi3x7uYl38oTwr06SLw7HgQm4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "150778617195-3r3r1e4d2a2q2rmgr3q3b364cth2qm1l.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "150778617195-1qjt0dv19k15t4fnugvv8v8lf0f43din.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.amct.mediheal"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
