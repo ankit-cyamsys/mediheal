@@ -1,5 +1,5 @@
 import { Tabs } from 'expo-router';
-import { colors } from '@/lib/theme';
+import { useThemeColors } from '@/hooks/use-theme';
 import { Icon, type IconName } from '@/components/icon';
 
 const TAB_ICONS: Record<string, IconName> = {
@@ -11,6 +11,7 @@ const TAB_ICONS: Record<string, IconName> = {
 };
 
 export default function TabsLayout() {
+  const colors = useThemeColors();
   return (
     <Tabs
       screenOptions={({ route }) => ({

@@ -10,20 +10,34 @@ import {
   Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import * as WebBrowser from 'expo-web-browser';
 import { Input, PrimaryButton, SocialButton, HeadlineMd, BodyMd, LabelSm } from '@/components/ui';
 import { Icon } from '@/components/icon';
 import { useAuthActions } from '@/hooks/use-auth-actions';
+import { useThemeColors } from '@/hooks/use-theme';
 import { signInWithGoogle } from '@/lib/social-auth';
+import { humanizeError } from '@/lib/errors';
+import { TERMS_URL } from '@/lib/constants';
 
 const logo = require('../../../assets/akhand.png');
 
 type Mode = 'signin' | 'signup';
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+interface FieldErrors {
+  email?: string;
+  password?: string;
+  name?: string;
+}
+
 export default function LoginScreen() {
   const { signIn, signUp, continueAsGuest, loginSocial } = useAuthActions();
+  const colors = useThemeColors();
   const [mode, setMode] = useState<Mode>('signin');
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState('');
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
 
   // shared form state
   const [email, setEmail] = useState('');
@@ -31,22 +45,44 @@ export default function LoginScreen() {
   const [name, setName] = useState('');
   const [showPw, setShowPw] = useState(false);
 
-  const run = async (fn: () => Promise<void>) => {
+  const run = async (fn: () => Promise<void>, context?: Parameters<typeof humanizeError>[1]) => {
     setBusy(true);
     setErr('');
     try {
       await fn();
       // Navigation handled by the auth gate once the token is set.
     } catch (e) {
-      setErr(e instanceof Error ? e.message : 'Something went wrong');
+      setErr(humanizeError(e, context));
     } finally {
       setBusy(false);
     }
   };
 
+  /** Client-side checks so people get instant, readable feedback. */
+  const validate = (): FieldErrors => {
+    const next: FieldErrors = {};
+    const trimmedEmail = email.trim();
+    if (!trimmedEmail) next.email = 'Email is required.';
+    else if (!EMAIL_RE.test(trimmedEmail)) next.email = 'Please enter a valid email address.';
+
+    if (!password) next.password = 'Password is required.';
+    else if (mode === 'signup' && password.length < 8)
+      next.password = 'Password must be at least 8 characters.';
+
+    return next;
+  };
+
   const onSubmit = () => {
-    if (mode === 'signin') run(() => signIn(email, password));
-    else run(() => signUp({ email, password, name: name || undefined }));
+    const errors = validate();
+    setFieldErrors(errors);
+    if (Object.keys(errors).length) return;
+
+    if (mode === 'signin') run(() => signIn(email.trim(), password), 'signin');
+    else
+      run(
+        () => signUp({ email: email.trim(), password, name: name.trim() || undefined }),
+        'signup',
+      );
   };
 
   const onGoogle = () =>
@@ -54,7 +90,9 @@ export default function LoginScreen() {
       const idToken = await signInWithGoogle();
       if (!idToken) return; // user cancelled the account picker
       await loginSocial(idToken);
-    });
+    }, 'social');
+
+  const openTerms = () => WebBrowser.openBrowserAsync(TERMS_URL).catch(() => {});
 
   const socialSoon = (provider: string) =>
     Alert.alert('Coming soon', `${provider} sign-in will be available soon.`);
@@ -90,6 +128,7 @@ export default function LoginScreen() {
                 onPress={() => {
                   setMode(m);
                   setErr('');
+                  setFieldErrors({});
                 }}
                 className={`flex-1 items-center rounded-xl py-2.5 ${mode === m ? 'bg-surface-container-lowest' : ''}`}
               >
@@ -123,26 +162,34 @@ export default function LoginScreen() {
               label="Email"
               placeholder="you@example.com"
               value={email}
-              onChangeText={setEmail}
+              onChangeText={(t) => {
+                setEmail(t);
+                if (fieldErrors.email) setFieldErrors((f) => ({ ...f, email: undefined }));
+              }}
               keyboardType="email-address"
               autoCapitalize="none"
               autoComplete="email"
+              error={fieldErrors.email}
             />
             <View>
               <Input
                 label="Password"
                 placeholder="8+ characters"
                 value={password}
-                onChangeText={setPassword}
+                onChangeText={(t) => {
+                  setPassword(t);
+                  if (fieldErrors.password) setFieldErrors((f) => ({ ...f, password: undefined }));
+                }}
                 secureTextEntry={!showPw}
                 autoCapitalize="none"
+                error={fieldErrors.password}
               />
               <Pressable
                 onPress={() => setShowPw((v) => !v)}
                 className="absolute right-4 top-10 p-1"
                 hitSlop={8}
               >
-                <Icon name={showPw ? 'eyeoff' : 'eye'} size={20} color="#717975" />
+                <Icon name={showPw ? 'eyeoff' : 'eye'} size={20} color={colors.outline} />
               </Pressable>
             </View>
 
@@ -174,7 +221,7 @@ export default function LoginScreen() {
             disabled={busy}
             className="mt-6 flex-row items-center gap-3 rounded-xl border border-outline-variant bg-surface-container-lowest px-5 py-4 active:opacity-80"
           >
-            <Icon name="user" size={22} color="#717975" />
+            <Icon name="user" size={22} color={colors.outline} />
             <View>
               <Text className="text-body-md font-semibold text-on-surface">Continue as Guest</Text>
               <Text className="text-label-md text-on-surface-variant">
@@ -184,7 +231,11 @@ export default function LoginScreen() {
           </Pressable>
 
           <Text className="mt-6 text-center text-label-md text-on-surface-variant">
-            By continuing you agree to our Terms &amp; Privacy.
+            By continuing you agree to our{' '}
+            <Text className="font-semibold text-primary underline" onPress={openTerms}>
+              Terms &amp; Privacy
+            </Text>
+            .
           </Text>
         </ScrollView>
       </KeyboardAvoidingView>

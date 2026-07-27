@@ -7,11 +7,12 @@ import { Icon } from '@/components/icon';
 import { Thumb } from '@/components/thumb';
 import { gradForKey, ON_THUMB } from '@/lib/gradients';
 import { localized } from '@/lib/localized';
-import { colors } from '@/lib/theme';
+import { useThemeColors } from '@/hooks/use-theme';
 import { useProgram } from '@/hooks/use-programs';
 import type { Session } from '@/types';
 
 export default function ProgramDetailScreen() {
+  const colors = useThemeColors();
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
   const { data: program, isLoading, error } = useProgram(id);
@@ -141,6 +142,7 @@ function LessonRow({
   session: Session;
   onPlay: (dur: number | string) => void;
 }) {
+  const colors = useThemeColors();
   const status = session.status || 'locked';
   const locked = status === 'locked';
   const done = status === 'completed';
@@ -172,7 +174,7 @@ function LessonRow({
         {done ? (
           <Icon name="check" size={18} color={ON_THUMB} />
         ) : locked ? (
-          <Icon name="lock" size={15} color="#717975" />
+          <Icon name="lock" size={15} color={colors.outline} />
         ) : (
           <Text className={`font-bold ${current ? 'text-primary' : 'text-on-surface-variant'}`}>
             {session.day_number}

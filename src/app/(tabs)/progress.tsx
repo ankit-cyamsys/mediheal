@@ -6,7 +6,7 @@ import { Icon } from '@/components/icon';
 import { Thumb } from '@/components/thumb';
 import { ON_THUMB } from '@/lib/gradients';
 import { localized } from '@/lib/localized';
-import { colors } from '@/lib/theme';
+import { useThemeColors } from '@/hooks/use-theme';
 import { api } from '@/services/api';
 import { useAuthStore } from '@/stores/auth-store';
 import type { ProgramSummary, Progress } from '@/types';
@@ -42,6 +42,7 @@ function useProgressStats() {
 }
 
 export default function ProgressScreen() {
+  const colors = useThemeColors();
   const { data: stats, isLoading } = useProgressStats();
   const todayIdx = new Date().getDay();
 

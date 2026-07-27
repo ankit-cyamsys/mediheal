@@ -5,13 +5,14 @@ import { useRouter } from 'expo-router';
 import { HeadlineLg, HeadlineSm, BodyMd, LabelSm } from '@/components/ui';
 import { Icon } from '@/components/icon';
 import { ProgramTile } from '@/components/program-tile';
-import { colors } from '@/lib/theme';
+import { useThemeColors } from '@/hooks/use-theme';
 import { usePrograms } from '@/hooks/use-programs';
 import type { ProgramKind } from '@/types';
 
 const KINDS: (ProgramKind | 'All')[] = ['All', 'course', 'collection', 'single'];
 
 export default function ExploreScreen() {
+  const colors = useThemeColors();
   const router = useRouter();
   const [filter, setFilter] = useState<ProgramKind | 'All'>('All');
   const { data: programs, isLoading, error } = usePrograms();

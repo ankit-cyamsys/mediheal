@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { WebView } from 'react-native-webview';
 import { HeadlineSm } from '@/components/ui';
 import { Icon } from '@/components/icon';
-import { colors } from '@/lib/theme';
+import { useThemeColors } from '@/hooks/use-theme';
 import { api } from '@/services/api';
 import { useAuthStore } from '@/stores/auth-store';
 
@@ -12,6 +12,7 @@ import { useAuthStore } from '@/stores/auth-store';
 const FALLBACK_URL = 'https://pages.razorpay.com/pl_RZNuhmig9UnpPx/view';
 
 export default function DonateScreen() {
+  const colors = useThemeColors();
   const token = useAuthStore((s) => s.token);
   const [url, setUrl] = useState<string | null>(null);
   const [loaded, setLoaded] = useState(false);

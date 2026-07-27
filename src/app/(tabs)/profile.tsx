@@ -2,15 +2,19 @@ import { useState } from 'react';
 import { View, Text, Pressable, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
+import * as WebBrowser from 'expo-web-browser';
 import { HeadlineLg, HeadlineSm, BodyMd, LabelSm, Input, PrimaryButton } from '@/components/ui';
 import { Icon, type IconName } from '@/components/icon';
 import { Thumb } from '@/components/thumb';
 import { ON_THUMB } from '@/lib/gradients';
-import { colors } from '@/lib/theme';
 import { api } from '@/services/api';
 import { useAuthStore } from '@/stores/auth-store';
 import { useAppStore } from '@/stores/app-store';
 import { useSignOut } from '@/hooks/use-sign-out';
+import { useTheme, useThemeColors } from '@/hooks/use-theme';
+import { humanizeError } from '@/lib/errors';
+import { TERMS_URL } from '@/lib/constants';
+import type { ThemeMode } from '@/stores/theme-store';
 import type { User } from '@/types';
 
 function ListItem({
@@ -26,6 +30,7 @@ function ListItem({
   trailing?: React.ReactNode;
   danger?: boolean;
 }) {
+  const colors = useThemeColors();
   return (
     <Pressable
       onPress={onPress}
@@ -40,6 +45,45 @@ function ListItem({
       <Text className="flex-1 text-body-md font-semibold text-on-surface">{label}</Text>
       {trailing ?? <Icon name="chevron" size={18} color={colors.outline} />}
     </Pressable>
+  );
+}
+
+const THEME_OPTIONS: { mode: ThemeMode; label: string; icon: IconName }[] = [
+  { mode: 'light', label: 'Light', icon: 'sun' },
+  { mode: 'dark', label: 'Dark', icon: 'moon' },
+  { mode: 'system', label: 'Auto', icon: 'settings' },
+];
+
+/** Segmented Light / Dark / Auto appearance selector. */
+function AppearanceToggle() {
+  const { mode, setMode, scheme } = useTheme();
+  const colors = useThemeColors();
+  return (
+    <View className="mt-4 rounded-2xl bg-surface-container p-4">
+      <Text className="mb-3 text-label-md font-bold text-on-surface-variant">Appearance</Text>
+      <View className="flex-row rounded-xl bg-surface-container-high p-1">
+        {THEME_OPTIONS.map((opt) => {
+          const active = mode === opt.mode;
+          return (
+            <Pressable
+              key={opt.mode}
+              onPress={() => setMode(opt.mode)}
+              className={`flex-1 flex-row items-center justify-center gap-2 rounded-lg py-2.5 ${active ? 'bg-surface-container-lowest' : ''}`}
+            >
+              <Icon name={opt.icon} size={16} color={active ? colors.primary : colors.outline} />
+              <Text
+                className={`text-label-md font-semibold ${active ? 'text-primary' : 'text-on-surface-variant'}`}
+              >
+                {opt.label}
+              </Text>
+            </Pressable>
+          );
+        })}
+      </View>
+      <Text className="mt-2 text-label-sm text-on-surface-variant">
+        {mode === 'system' ? `Following your device (${scheme}).` : `Always ${mode}.`}
+      </Text>
+    </View>
   );
 }
 
@@ -79,11 +123,13 @@ export default function ProfileScreen() {
       setEditing(false);
       setForm({ name: '', timezone: '' });
     } catch (e) {
-      setErr(e instanceof Error ? e.message : 'Something went wrong');
+      setErr(humanizeError(e, 'profile'));
     } finally {
       setSaving(false);
     }
   };
+
+  const openTerms = () => WebBrowser.openBrowserAsync(TERMS_URL).catch(() => {});
 
   return (
     <SafeAreaView className="flex-1 bg-surface">
@@ -156,8 +202,11 @@ export default function ProfileScreen() {
           <Text className="mt-3 text-label-md font-semibold text-primary">Saved.</Text>
         ) : null}
 
+        {/* Appearance */}
+        <AppearanceToggle />
+
         {/* Settings */}
-        <View className="mt-5 overflow-hidden rounded-2xl bg-surface-container">
+        <View className="mt-4 overflow-hidden rounded-2xl bg-surface-container">
           <ListItem
             icon="bell"
             label="Daily reminder"
@@ -170,7 +219,7 @@ export default function ProfileScreen() {
           <Divider />
           <ListItem icon="heart" label="Support Mediheal" onPress={() => router.push('/donate')} />
           <Divider />
-          <ListItem icon="info" label="About & help" />
+          <ListItem icon="info" label="Terms & Conditions" onPress={openTerms} />
           <Divider />
           <ListItem
             icon="back"

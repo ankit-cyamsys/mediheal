@@ -1,5 +1,5 @@
 import Svg, { Circle, Path, Rect } from 'react-native-svg';
-import { colors } from '@/lib/theme';
+import { useThemeColors } from '@/hooks/use-theme';
 
 export type IconName =
   | 'home'
@@ -43,15 +43,17 @@ export interface IconProps {
 }
 
 /** Line-icon set ported from the web design (react-native-svg). */
-export function Icon({ name, size = 24, stroke = 2, color = colors['on-surface'] }: IconProps) {
+export function Icon({ name, size = 24, stroke = 2, color }: IconProps) {
+  const themeColors = useThemeColors();
+  const resolved = color ?? themeColors['on-surface'];
   const s = {
-    stroke: color,
+    stroke: resolved,
     strokeWidth: stroke,
     strokeLinecap: 'round' as const,
     strokeLinejoin: 'round' as const,
     fill: 'none',
   };
-  const fill = { fill: color };
+  const fill = { fill: resolved };
 
   const content = (() => {
     switch (name) {

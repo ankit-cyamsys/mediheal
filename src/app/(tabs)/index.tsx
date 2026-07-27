@@ -7,7 +7,7 @@ import { Thumb } from '@/components/thumb';
 import { ProgramTile } from '@/components/program-tile';
 import { gradForKey, ON_THUMB } from '@/lib/gradients';
 import { localized } from '@/lib/localized';
-import { colors } from '@/lib/theme';
+import { useThemeColors } from '@/hooks/use-theme';
 import { useAuthStore } from '@/stores/auth-store';
 import { usePrograms, useProgress } from '@/hooks/use-programs';
 import type { ProgramSummary, Progress } from '@/types';
@@ -20,6 +20,7 @@ function greeting() {
 }
 
 export default function HomeScreen() {
+  const colors = useThemeColors();
   const user = useAuthStore((s) => s.user);
   const router = useRouter();
   const { data: programs, isLoading, error } = usePrograms();
@@ -112,6 +113,7 @@ export default function HomeScreen() {
 }
 
 function FeaturedCard({ program, onPress }: { program: ProgramSummary; onPress: () => void }) {
+  const colors = useThemeColors();
   return (
     <Thumb grad={gradForKey(program.slug || program.id)} style={{ height: 200 }} className="p-5">
       <View className="flex-row items-start justify-between">
@@ -147,6 +149,7 @@ function ContinueCard({
   progress: Progress;
   onPress: () => void;
 }) {
+  const colors = useThemeColors();
   const done = progress.sessions_completed.length;
   const total = program.total_sessions;
   const pct = total ? Math.round((done / total) * 100) : 0;
@@ -175,7 +178,7 @@ function ContinueCard({
               {done} of {total} sessions complete
             </Text>
           </View>
-          <Icon name="chevron" size={18} color="#717975" />
+          <Icon name="chevron" size={18} color={colors.outline} />
         </Pressable>
       </View>
     </View>

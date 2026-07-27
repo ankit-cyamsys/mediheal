@@ -7,7 +7,7 @@ import Svg, { Circle } from 'react-native-svg';
 import { Icon } from '@/components/icon';
 import { Thumb } from '@/components/thumb';
 import { gradForKey } from '@/lib/gradients';
-import { colors } from '@/lib/theme';
+import { useThemeColors } from '@/hooks/use-theme';
 import { api } from '@/services/api';
 import { fetchPlayback } from '@/hooks/use-programs';
 import { useAuthStore } from '@/stores/auth-store';
@@ -29,6 +29,7 @@ const SEQ: [Phase, number][] = [
 ];
 
 export default function PlayScreen() {
+  const colors = useThemeColors();
   const {
     sessionId,
     duration: durationParam,

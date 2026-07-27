@@ -1,11 +1,15 @@
 import '../../global.css';
 import { useEffect } from 'react';
+import { View } from 'react-native';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import * as SystemUI from 'expo-system-ui';
+import { vars } from 'nativewind';
 import { Providers } from '@/components/providers';
 import { initSentry } from '@/lib/sentry';
 import { useAuthStore } from '@/stores/auth-store';
 import { useAppStore } from '@/stores/app-store';
+import { useTheme } from '@/hooks/use-theme';
 import { api, ApiError } from '@/services/api';
 import type { User } from '@/types';
 
@@ -59,11 +63,27 @@ function RootNavigator() {
   );
 }
 
+function ThemedApp() {
+  const { scheme, colors, vars: themeVars } = useTheme();
+
+  // Keep the native window background in sync so overscroll / transitions don't
+  // flash the wrong color.
+  useEffect(() => {
+    SystemUI.setBackgroundColorAsync(colors.surface).catch(() => {});
+  }, [colors.surface]);
+
+  return (
+    <View style={vars(themeVars)} className="flex-1 bg-surface">
+      <StatusBar style={scheme === 'dark' ? 'light' : 'dark'} />
+      <RootNavigator />
+    </View>
+  );
+}
+
 export default function RootLayout() {
   return (
     <Providers>
-      <StatusBar style="auto" />
-      <RootNavigator />
+      <ThemedApp />
     </Providers>
   );
 }

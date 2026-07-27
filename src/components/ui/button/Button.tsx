@@ -1,6 +1,6 @@
 import { Pressable, ActivityIndicator, Text } from 'react-native';
 import { type ButtonProps, type SocialButtonProps } from './types';
-import { styles } from './styles';
+import { useThemeColors } from '@/hooks/use-theme';
 
 export function PrimaryButton({
   children,
@@ -9,6 +9,7 @@ export function PrimaryButton({
   className = '',
   ...props
 }: ButtonProps) {
+  const colors = useThemeColors();
   return (
     <Pressable
       className={`w-full items-center justify-center rounded-xl bg-primary px-6 py-4 opacity-100 active:opacity-90 ${disabled ? 'opacity-50' : ''} ${className}`}
@@ -16,7 +17,7 @@ export function PrimaryButton({
       {...props}
     >
       {loading ? (
-        <ActivityIndicator color={styles.primaryLoaderColor} />
+        <ActivityIndicator color={colors['on-primary']} />
       ) : (
         <Text className="text-body-md font-semibold text-white">{children}</Text>
       )}
@@ -31,6 +32,7 @@ export function SecondaryButton({
   className = '',
   ...props
 }: ButtonProps) {
+  const colors = useThemeColors();
   return (
     <Pressable
       className={`w-full items-center justify-center rounded-xl border-2 border-secondary px-6 py-4 active:bg-secondary/5 ${disabled ? 'opacity-50' : ''} ${className}`}
@@ -38,7 +40,7 @@ export function SecondaryButton({
       {...props}
     >
       {loading ? (
-        <ActivityIndicator color={styles.secondaryLoaderColor} />
+        <ActivityIndicator color={colors.secondary} />
       ) : (
         <Text className="text-body-md font-semibold text-secondary">{children}</Text>
       )}

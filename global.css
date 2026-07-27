@@ -1,3 +1,61 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/*
+ * Light scheme defaults. These `--color-*` channels back the Tailwind color
+ * tokens (see tailwind.config.js). The runtime theme provider in
+ * src/app/_layout.tsx overrides them with the dark channels via NativeWind's
+ * `vars()` when the user picks the dark theme.
+ */
+@layer base {
+  :root {
+    --color-primary: 5 41 32;
+    --color-primary-container: 30 63 53;
+    --color-primary-fixed: 198 235 220;
+    --color-primary-fixed-dim: 170 206 192;
+    --color-on-primary: 255 255 255;
+    --color-on-primary-container: 135 170 157;
+    --color-on-primary-fixed: 0 32 24;
+    --color-on-primary-fixed-variant: 44 77 66;
+    --color-secondary: 138 73 106;
+    --color-secondary-container: 255 175 212;
+    --color-secondary-fixed: 255 216 232;
+    --color-secondary-fixed-dim: 255 175 212;
+    --color-on-secondary: 255 255 255;
+    --color-on-secondary-container: 124 62 94;
+    --color-on-secondary-fixed: 57 5 37;
+    --color-on-secondary-fixed-variant: 110 50 82;
+    --color-tertiary: 36 36 32;
+    --color-tertiary-container: 58 57 53;
+    --color-tertiary-fixed: 229 226 219;
+    --color-tertiary-fixed-dim: 201 198 192;
+    --color-on-tertiary: 255 255 255;
+    --color-on-tertiary-container: 164 163 156;
+    --color-on-tertiary-fixed: 28 28 24;
+    --color-on-tertiary-fixed-variant: 71 71 66;
+    --color-error: 186 26 26;
+    --color-error-container: 255 218 214;
+    --color-on-error: 255 255 255;
+    --color-on-error-container: 147 0 10;
+    --color-surface: 248 250 245;
+    --color-surface-dim: 217 219 214;
+    --color-surface-bright: 248 250 245;
+    --color-surface-variant: 225 227 223;
+    --color-surface-tint: 68 101 90;
+    --color-surface-container: 237 238 234;
+    --color-surface-container-low: 242 244 240;
+    --color-surface-container-high: 231 233 228;
+    --color-surface-container-highest: 225 227 223;
+    --color-surface-container-lowest: 255 255 255;
+    --color-on-surface: 25 28 26;
+    --color-on-surface-variant: 65 72 69;
+    --color-outline: 113 121 117;
+    --color-outline-variant: 193 200 196;
+    --color-background: 248 250 245;
+    --color-on-background: 25 28 26;
+    --color-inverse-surface: 46 49 46;
+    --color-inverse-on-surface: 240 241 237;
+    --color-inverse-primary: 170 206 192;
+  }
+}

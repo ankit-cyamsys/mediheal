@@ -2,7 +2,7 @@
   "expo": {
     "name": "MediHeal",
     "slug": "mediheal",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "scheme": "mediheal",
@@ -22,7 +22,9 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.amct.mediheal"
+      "package": "com.amct.mediheal",
+      "googleServicesFile": "./google-services.json",
+      "permissions": ["android.permission.RECORD_AUDIO", "android.permission.MODIFY_AUDIO_SETTINGS"]
     },
     "web": {
       "bundler": "metro",
@@ -40,10 +42,17 @@
       "expo-audio",
       "@sentry/react-native",
       "expo-localization",
-      "expo-web-browser"
+      "expo-web-browser",
+      "@react-native-google-signin/google-signin"
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "d796a4a3-5434-4d5a-b772-9643a1dd1085"
+      }
     }
   }
 }

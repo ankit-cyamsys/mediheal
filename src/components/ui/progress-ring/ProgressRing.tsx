@@ -2,7 +2,7 @@ import { View } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
 import { HeadlineLg, LabelMd } from '../text';
 import { type ProgressRingProps } from './types';
-import { styles } from './styles';
+import { useThemeColors } from '@/hooks/use-theme';
 
 export function ProgressRing({
   progress,
@@ -11,6 +11,7 @@ export function ProgressRing({
   label,
   className = '',
 }: ProgressRingProps) {
+  const colors = useThemeColors();
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (progress / 100) * circumference;
@@ -23,7 +24,7 @@ export function ProgressRing({
           cx={center}
           cy={center}
           r={radius}
-          stroke={styles.trackColor}
+          stroke={colors['surface-variant']}
           strokeWidth={strokeWidth}
           fill="transparent"
         />
@@ -31,7 +32,7 @@ export function ProgressRing({
           cx={center}
           cy={center}
           r={radius}
-          stroke={styles.fillColor}
+          stroke={colors.primary}
           strokeWidth={strokeWidth}
           fill="transparent"
           strokeDasharray={circumference}

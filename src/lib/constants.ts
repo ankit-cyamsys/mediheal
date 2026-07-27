@@ -6,6 +6,10 @@ export const APP_VERSION = '1.0.0';
 // API
 export const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL ?? 'https://mediheal.onrender.com';
 
+// Legal / external links
+export const TERMS_URL = 'https://akhandmadalakaram.org/mediheal';
+export const PRIVACY_URL = 'https://akhandmadalakaram.org/mediheal';
+
 // Storage Keys
 export const STORAGE_KEYS = {
   APP_STORE: 'app-store',
