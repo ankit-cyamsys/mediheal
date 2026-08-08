@@ -112,7 +112,7 @@ export default function LoginScreen() {
             <View className="h-16 w-16 items-center justify-center rounded-2xl border border-outline-variant bg-surface-container-lowest">
               <Image source={logo} style={{ width: 52, height: 52 }} resizeMode="contain" />
             </View>
-            <View>
+            <View className="flex-1">
               <HeadlineMd>Mediheal</HeadlineMd>
               <BodyMd className="mt-1 text-on-surface-variant">
                 A calmer mind, a few minutes a day.

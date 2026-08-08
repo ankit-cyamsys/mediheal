@@ -80,7 +80,16 @@ export default function OnboardingScreen() {
             </Pressable>
           </View>
 
-          <View className="flex-1 items-center justify-center">
+          <ScrollView
+            className="flex-1"
+            contentContainerStyle={{
+              flexGrow: 1,
+              alignItems: 'center',
+              justifyContent: 'center',
+              paddingVertical: 24,
+            }}
+            showsVerticalScrollIndicator={false}
+          >
             <Thumb grad={w.grad} className="h-44 w-44 items-center justify-center">
               <Icon name={w.icon} size={64} stroke={1.6} color={ON_THUMB} />
             </Thumb>
@@ -88,7 +97,7 @@ export default function OnboardingScreen() {
             <BodyMd className="mt-3 max-w-[300px] text-center text-on-surface-variant">
               {w.body}
             </BodyMd>
-          </View>
+          </ScrollView>
 
           <View className="mb-4 flex-row justify-center gap-2">
             {WELCOME.map((_, i) => (
@@ -185,7 +194,11 @@ export default function OnboardingScreen() {
         >
           <Icon name="back" size={20} />
         </Pressable>
-        <View className="flex-1 justify-center">
+        <ScrollView
+          className="flex-1"
+          contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', paddingVertical: 16 }}
+          showsVerticalScrollIndicator={false}
+        >
           <View className="items-center">
             <LabelSm>Check in</LabelSm>
             <HeadlineLg className="mt-1 text-center">How are you{'\n'}feeling today?</HeadlineLg>
@@ -211,7 +224,7 @@ export default function OnboardingScreen() {
               );
             })}
           </View>
-        </View>
+        </ScrollView>
         <View className="pb-6">
           <PrimaryButton onPress={() => finish(mood)} disabled={!mood}>
             {mood ? 'Start meditating' : 'Pick a mood'}

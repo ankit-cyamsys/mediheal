@@ -3,6 +3,7 @@ import { View, Text, Pressable, Animated, Easing } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useAudioPlayer, useAudioPlayerStatus, setAudioModeAsync } from 'expo-audio';
+import * as FileSystem from 'expo-file-system/legacy';
 import Svg, { Circle } from 'react-native-svg';
 import { Icon } from '@/components/icon';
 import { Thumb } from '@/components/thumb';
@@ -13,10 +14,14 @@ import { fetchPlayback } from '@/hooks/use-programs';
 import { useAuthStore } from '@/stores/auth-store';
 import type { PlaybackInfo } from '@/types';
 
-const R = 130;
-const SIZE = 280;
-const CENTER = SIZE / 2;
-const CIRC = 2 * Math.PI * R;
+// Play/pause button + the progress ring hugging it.
+const BTN = 96;
+const RING = 140;
+const RING_STROKE = 8;
+const RING_R = (RING - RING_STROKE) / 2;
+const RING_CIRC = 2 * Math.PI * RING_R;
+// Outer breathing halo diameter.
+const BREATH = 272;
 
 const fmtClock = (s: number) =>
   `${Math.floor((s || 0) / 60)}:${String(Math.floor((s || 0) % 60)).padStart(2, '0')}`;
@@ -48,17 +53,28 @@ export default function PlayScreen() {
   const [phase, setPhase] = useState<Phase>('inhale');
   const submitted = useRef(false);
 
-  const player = useAudioPlayer(signed?.url ?? null, { downloadFirst: true, updateInterval: 500 });
+  // Local-first download so we can show a real download % and play offline.
+  const [localUri, setLocalUri] = useState<string | null>(null);
+  const [dlPct, setDlPct] = useState(0);
+  const [dlFailed, setDlFailed] = useState(false);
+
+  // Play the downloaded file; fall back to streaming the remote URL if the
+  // download failed for any reason.
+  const source = localUri ?? (dlFailed ? (signed?.url ?? null) : null);
+  const player = useAudioPlayer(source, { updateInterval: 500 });
   const status = useAudioPlayerStatus(player);
 
   const playing = status.playing;
   const elapsed = status.currentTime || 0;
   const total = status.duration || (signed?.duration ? signed.duration * 60 : 0);
-  const ringProg = total ? Math.min(1, elapsed / total) : 0;
+  const downloading = !localUri && !dlFailed;
+  const playProg = total ? Math.min(1, elapsed / total) : 0;
+  // The ring shows the download while fetching, then the playback position.
+  const ringProg = downloading ? dlPct : playProg;
 
-  // Configure audio to play in silent mode.
+  // Keep audio playing with the screen off / app backgrounded (the reported bug).
   useEffect(() => {
-    setAudioModeAsync({ playsInSilentMode: true }).catch(() => {});
+    setAudioModeAsync({ playsInSilentMode: true, shouldPlayInBackground: true }).catch(() => {});
   }, []);
 
   // 1) Fetch signed playback URL.
@@ -74,7 +90,48 @@ export default function PlayScreen() {
     };
   }, [sessionId, durationParam, token]);
 
-  // 2) Auto-play once loaded.
+  // 2) Download the audio to cache with progress (drives the ring %).
+  useEffect(() => {
+    if (!signed?.url) return;
+    let cancelled = false;
+    setLocalUri(null);
+    setDlPct(0);
+    setDlFailed(false);
+
+    const path = `${FileSystem.cacheDirectory}mh-${sessionId}-${signed.duration ?? 'x'}.mp3`;
+    (async () => {
+      try {
+        const info = await FileSystem.getInfoAsync(path);
+        if (info.exists && info.size > 0) {
+          if (!cancelled) {
+            setDlPct(1);
+            setLocalUri(path);
+          }
+          return;
+        }
+        const task = FileSystem.createDownloadResumable(signed.url, path, {}, (p) => {
+          if (cancelled) return;
+          const pct =
+            p.totalBytesExpectedToWrite > 0 ? p.totalBytesWritten / p.totalBytesExpectedToWrite : 0;
+          setDlPct(pct);
+        });
+        const res = await task.downloadAsync();
+        if (!cancelled && res?.uri) {
+          setDlPct(1);
+          setLocalUri(res.uri);
+        }
+      } catch {
+        // Fall back to streaming the remote URL directly.
+        if (!cancelled) setDlFailed(true);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [signed?.url, signed?.duration, sessionId]);
+
+  // 3) Auto-play once loaded.
   useEffect(() => {
     if (status.isLoaded && !playing && elapsed === 0 && !submitted.current) {
       player.play();
@@ -82,13 +139,13 @@ export default function PlayScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status.isLoaded]);
 
-  // 3) Complete when the track finishes.
+  // 4) Complete when the track finishes.
   useEffect(() => {
     if (status.didJustFinish) markComplete();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status.didJustFinish]);
 
-  // 4) Breathing cycle while playing.
+  // 5) Breathing cycle while playing.
   useEffect(() => {
     if (!playing) return;
     let i = 0;
@@ -104,12 +161,12 @@ export default function PlayScreen() {
     return () => clearTimeout(timer);
   }, [playing]);
 
-  // Breathing core scale animation driven by phase.
-  const scale = useRef(new Animated.Value(0.7)).current;
+  // Breathing halo scale driven by phase.
+  const scale = useRef(new Animated.Value(1)).current;
   useEffect(() => {
-    const to = phase === 'inhale' ? 1 : phase === 'hold' ? 1 : 0.7;
+    const to = playing ? (phase === 'exhale' ? 0.86 : 1.14) : 1;
     Animated.timing(scale, {
-      toValue: playing ? to : 0.85,
+      toValue: to,
       duration: phase === 'exhale' ? 5000 : phase === 'inhale' ? 4000 : 2000,
       easing: Easing.inOut(Easing.ease),
       useNativeDriver: true,
@@ -120,11 +177,6 @@ export default function PlayScreen() {
     if (!status.isLoaded) return;
     if (playing) player.pause();
     else player.play();
-  };
-
-  const skip = (delta: number) => {
-    if (!status.isLoaded) return;
-    player.seekTo(Math.max(0, Math.min(total, elapsed + delta)));
   };
 
   const markComplete = async () => {
@@ -159,15 +211,17 @@ export default function PlayScreen() {
   };
 
   const grad = gradForKey(sessionId);
-  const breathLabel = !status.isLoaded
-    ? 'Loading…'
-    : playing
-      ? phase === 'inhale'
-        ? 'Breathe in'
-        : phase === 'hold'
-          ? 'Hold'
-          : 'Breathe out'
-      : 'Paused';
+  const statusLabel = downloading
+    ? `Downloading ${Math.round(dlPct * 100)}%`
+    : !status.isLoaded
+      ? 'Loading…'
+      : playing
+        ? phase === 'inhale'
+          ? 'Breathe in'
+          : phase === 'hold'
+            ? 'Hold'
+            : 'Breathe out'
+        : 'Paused';
 
   return (
     <View className="flex-1 bg-surface">
@@ -203,54 +257,91 @@ export default function PlayScreen() {
         </View>
 
         <View className="flex-1 items-center justify-center px-6">
-          {/* Ring + breathing */}
+          {/* Breathing halo + progress ring + play/pause */}
           <View
-            style={{ width: SIZE, height: SIZE, alignItems: 'center', justifyContent: 'center' }}
+            style={{
+              width: BREATH,
+              height: BREATH,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
           >
+            <Animated.View
+              style={{
+                position: 'absolute',
+                width: BREATH,
+                height: BREATH,
+                borderRadius: 999,
+                backgroundColor: colors.primary,
+                opacity: 0.06,
+                transform: [{ scale }],
+              }}
+            />
+            <Animated.View
+              style={{
+                position: 'absolute',
+                width: BREATH * 0.7,
+                height: BREATH * 0.7,
+                borderRadius: 999,
+                backgroundColor: colors.primary,
+                opacity: 0.1,
+                transform: [{ scale }],
+              }}
+            />
+
+            {/* Progress ring hugging the button (download %, then playback) */}
             <Svg
-              width={SIZE}
-              height={SIZE}
+              width={RING}
+              height={RING}
               style={{ position: 'absolute', transform: [{ rotate: '-90deg' }] }}
             >
               <Circle
-                cx={CENTER}
-                cy={CENTER}
-                r={R}
+                cx={RING / 2}
+                cy={RING / 2}
+                r={RING_R}
                 stroke={colors['surface-variant']}
-                strokeWidth={6}
+                strokeWidth={RING_STROKE}
                 fill="none"
               />
               <Circle
-                cx={CENTER}
-                cy={CENTER}
-                r={R}
+                cx={RING / 2}
+                cy={RING / 2}
+                r={RING_R}
                 stroke={colors.primary}
-                strokeWidth={6}
+                strokeWidth={RING_STROKE}
                 fill="none"
                 strokeLinecap="round"
-                strokeDasharray={CIRC}
-                strokeDashoffset={CIRC * (1 - ringProg)}
+                strokeDasharray={RING_CIRC}
+                strokeDashoffset={RING_CIRC * (1 - ringProg)}
               />
             </Svg>
-            <Animated.View
+
+            <Pressable
+              onPress={togglePlay}
+              disabled={!status.isLoaded}
               style={{
-                width: 150,
-                height: 150,
+                width: BTN,
+                height: BTN,
                 borderRadius: 999,
-                backgroundColor: colors['primary-container'],
-                transform: [{ scale }],
-                position: 'absolute',
+                backgroundColor: colors.primary,
+                alignItems: 'center',
+                justifyContent: 'center',
+                opacity: status.isLoaded ? 1 : 0.55,
               }}
-            />
-            <Text className="text-body-lg font-bold text-on-surface">{breathLabel}</Text>
+            >
+              <Icon name={playing ? 'pause' : 'play'} size={34} color={colors['on-primary']} />
+            </Pressable>
           </View>
 
+          {/* Status / breath cue */}
+          <Text className="mt-7 text-body-lg font-bold text-on-surface">{statusLabel}</Text>
+
           {/* Scrubber */}
-          <View style={{ width: '100%', maxWidth: 320, marginTop: 34 }}>
+          <View style={{ width: '100%', maxWidth: 320, marginTop: 20 }}>
             <View className="h-1.5 overflow-hidden rounded-full bg-surface-variant">
               <View
                 className="h-full rounded-full bg-primary"
-                style={{ width: `${ringProg * 100}%` }}
+                style={{ width: `${playProg * 100}%` }}
               />
             </View>
             <View className="mt-2 flex-row items-center justify-between">
@@ -260,39 +351,15 @@ export default function PlayScreen() {
           </View>
 
           {err && (
-            <View className="mt-3 rounded-xl bg-error-container px-4 py-2">
+            <View className="mt-4 rounded-xl bg-error-container px-4 py-2">
               <Text className="text-label-md text-on-error-container">{err}</Text>
             </View>
           )}
 
-          {/* Controls */}
-          <View className="mt-8 flex-row items-center gap-6">
-            <Pressable
-              onPress={() => skip(-15)}
-              className="h-14 w-14 items-center justify-center rounded-full bg-surface-container"
-            >
-              <Icon name="skipb" size={24} />
-            </Pressable>
-            <Pressable
-              onPress={togglePlay}
-              disabled={!status.isLoaded}
-              className="h-20 w-20 items-center justify-center rounded-full bg-primary"
-              style={{ opacity: status.isLoaded ? 1 : 0.6 }}
-            >
-              <Icon name={playing ? 'pause' : 'play'} size={30} color={colors['on-primary']} />
-            </Pressable>
-            <Pressable
-              onPress={() => skip(15)}
-              className="h-14 w-14 items-center justify-center rounded-full bg-surface-container"
-            >
-              <Icon name="skipf" size={24} />
-            </Pressable>
-          </View>
-
           <Pressable
             onPress={markComplete}
             disabled={submitting || !signed}
-            className="mt-6 rounded-full border border-outline-variant px-6 py-3"
+            className="mt-8 rounded-full border border-outline-variant px-6 py-3"
             style={{ opacity: submitting || !signed ? 0.6 : 1 }}
           >
             <Text className="text-label-md font-semibold text-on-surface">

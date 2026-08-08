@@ -29,3 +29,6 @@ expo-env.d.ts
 # Local build artifacts (do not commit — large binaries)
 *.aab
 *.apk
+
+# Stray pasted images at repo root
+image-*.png
